@@ -1,11 +1,13 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { colors } from '../constants/theme';
 
-export type TabKey = 'home' | 'services' | 'schedule' | 'profile';
+export type TabKey = 'home' | 'services' | 'schedule' | 'progress' | 'profile';
 
 const TABS: { key: TabKey; label: string; icon: string }[] = [
   { key: 'home', label: 'Home', icon: '🏠' },
   { key: 'services', label: 'Services', icon: '🌱' },
   { key: 'schedule', label: 'Schedule', icon: '📅' },
+  { key: 'progress', label: 'Progress', icon: '📈' },
   { key: 'profile', label: 'Profile', icon: '👤' },
 ];
 
@@ -40,8 +42,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     borderTopWidth: 1,
-    borderTopColor: '#DCE7DD',
-    backgroundColor: '#FFFFFF',
+    borderTopColor: colors.border,
+    backgroundColor: colors.white,
     paddingBottom: 8,
     paddingTop: 8,
   },
@@ -56,10 +58,10 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 12,
-    color: '#8A9A8C',
+    color: colors.textMuted,
   },
   labelActive: {
-    color: '#2E7D32',
+    color: colors.primaryDark,
     fontWeight: '600',
   },
 });

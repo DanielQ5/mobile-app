@@ -15,12 +15,21 @@ export type Service = {
 
 export type AppointmentStatus = 'upcoming' | 'completed';
 
+export type LawnHealthStatus = 'excellent' | 'fair' | 'needs-attention';
+
 export type Appointment = {
   id: string;
   serviceId: ServiceId;
   serviceName: string;
   date: string;
   status: AppointmentStatus;
+  notes?: string;
+  rating?: number;
+  comment?: string;
+  isFree?: boolean;
+  // Set by the provider after the visit. Editing this from the provider side is a future enhancement;
+  // for now it's seeded mock data.
+  lawnHealth?: LawnHealthStatus;
 };
 
 export type Customer = {
@@ -30,6 +39,44 @@ export type Customer = {
   email: string;
   plan: string;
 };
+
+export type GardenZoneId = 'front-left' | 'front-right' | 'back-left' | 'back-right';
+
+export type GardenZoneHealth = {
+  zone: GardenZoneId;
+  label: string;
+  status: LawnHealthStatus;
+  recommendation: string;
+};
+
+// Set by the provider after visits, same as Appointment.lawnHealth. A provider-facing editor
+// for this is a future enhancement; for now it's seeded mock data.
+export const initialGardenZones: GardenZoneHealth[] = [
+  {
+    zone: 'front-left',
+    label: 'Front Left',
+    status: 'excellent',
+    recommendation: 'Looking great — keep up the current mowing schedule.',
+  },
+  {
+    zone: 'front-right',
+    label: 'Front Right',
+    status: 'fair',
+    recommendation: 'Light thinning near the walkway — consider overseeding.',
+  },
+  {
+    zone: 'back-left',
+    label: 'Back Left',
+    status: 'needs-attention',
+    recommendation: 'Soil is compacted — schedule an aeration visit.',
+  },
+  {
+    zone: 'back-right',
+    label: 'Back Right',
+    status: 'fair',
+    recommendation: 'A few weed patches spotted — worth a weed-control visit.',
+  },
+];
 
 export const services: Service[] = [
   {
@@ -83,6 +130,8 @@ export const initialAppointments: Appointment[] = [
     serviceName: 'Fertilizing',
     date: 'Tue, Jun 30',
     status: 'completed',
+    rating: 5,
+    lawnHealth: 'excellent',
   },
   {
     id: 'a3',
@@ -90,6 +139,9 @@ export const initialAppointments: Appointment[] = [
     serviceName: 'Lawn Mowing',
     date: 'Fri, Jun 26',
     status: 'completed',
+    rating: 4,
+    comment: 'Great job, but showed up a bit late.',
+    lawnHealth: 'fair',
   },
 ];
 
@@ -97,6 +149,6 @@ export const customer: Customer = {
   name: 'Daniel Quintanilla',
   address: '123 Maple Street, Springfield',
   phone: '(555) 012-3456',
-  email: 'daniel2356work@gmail.com',
+  email: 'daniel@test.com',
   plan: 'Green Care Monthly',
 };

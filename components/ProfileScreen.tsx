@@ -1,11 +1,14 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Customer } from '../data/mockData';
+import { Appointment, Customer } from '../data/mockData';
+import { colors } from '../constants/theme';
 
 type Props = {
   customer: Customer;
+  appointments: Appointment[];
+  rewardAvailable: boolean;
 };
 
-export default function ProfileScreen({ customer }: Props) {
+export default function ProfileScreen({ customer, appointments, rewardAvailable }: Props) {
   return (
     <ScrollView contentContainerStyle={styles.content}>
       <Text style={styles.heading}>Profile</Text>
@@ -25,6 +28,11 @@ export default function ProfileScreen({ customer }: Props) {
         <InfoRow label="Phone" value={customer.phone} />
         <InfoRow label="Email" value={customer.email} />
         <InfoRow label="Plan" value={customer.plan} />
+      </View>
+
+      <View style={styles.card}>
+        <InfoRow label="Maintenances Booked" value={String(appointments.length)} />
+        <InfoRow label="Free Maintenance" value={rewardAvailable ? 'Available 🎉' : 'Not yet earned'} />
       </View>
     </ScrollView>
   );
@@ -48,25 +56,25 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 22,
     fontWeight: '700',
-    color: '#1B4332',
+    color: colors.text,
     alignSelf: 'flex-start',
   },
   avatarCircle: {
     width: 72,
     height: 72,
     borderRadius: 36,
-    backgroundColor: '#2E7D32',
+    backgroundColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
   },
   avatarInitials: {
-    color: '#FFFFFF',
+    color: colors.white,
     fontSize: 24,
     fontWeight: '700',
   },
   card: {
     width: '100%',
-    backgroundColor: '#F1F8F2',
+    backgroundColor: colors.card,
     borderRadius: 14,
     padding: 16,
     gap: 12,
@@ -76,12 +84,12 @@ const styles = StyleSheet.create({
   },
   infoLabel: {
     fontSize: 12,
-    color: '#5C6B5D',
+    color: colors.textMuted,
     textTransform: 'uppercase',
   },
   infoValue: {
     fontSize: 15,
-    color: '#1B4332',
+    color: colors.text,
     fontWeight: '600',
   },
 });
