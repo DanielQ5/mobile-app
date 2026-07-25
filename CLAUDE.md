@@ -27,3 +27,17 @@ This is a single-screen-stack Expo (React Native + TypeScript) app with no navig
 - **Loyalty/rewards loop**: `App.tsx` tracks a `rewardAvailable` boolean that flips true whenever total bookings (`appointments.length`) crosses a multiple of 5; it's surfaced as progress copy on `HomeScreen` and a redeemable toggle in `ServicesScreen`'s booking modal, and clears once redeemed (booked appointment gets `isFree: true`).
 - **Customer rating vs. provider-set lawn health are two separate, one-directional flows** — don't conflate them. Customers rate a completed appointment via `StarRating` in `ScheduleScreen`, which writes `rating`/`comment` back onto that `Appointment` through `App.tsx`'s `handleRateAppointment`. Lawn health (`Appointment.lawnHealth` and the four-zone `initialGardenZones` shown on `ProgressScreen`) is provider-set, read-only seeded mock data — there's no UI for the customer (or provider) to edit it yet.
 - **Retention messaging is UI-only** — there's no backend or `expo-notifications`, so the "we miss you" check-in is just an in-app banner on `HomeScreen` shown when there's no upcoming appointment, not a real push notification.
+
+## Agent skills
+
+### Issue tracker
+
+Issues and specs live as local markdown files under `.scratch/<feature-slug>/`. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default canonical labels (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context — `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
