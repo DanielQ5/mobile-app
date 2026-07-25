@@ -154,3 +154,34 @@ export const customer: Customer = {
   email: 'daniel@test.com',
   plan: 'Green Care Monthly',
 };
+
+export type CareTip = {
+  keywords: string[];
+  response: string;
+};
+
+export const careTipFallback =
+  "Hmm, I'm not sure about that one yet — try describing what you're seeing (color, texture, dry/wet), or book a service and we'll take a look.";
+
+export const careTips: CareTip[] = [
+  {
+    keywords: ['dry', 'brown', 'crispy', 'crunchy'],
+    response: 'Sounds like it needs more water — try a deep watering early in the morning, 2–3x a week.',
+  },
+  {
+    keywords: ['yellow', 'patchy', 'patches'],
+    response: 'Yellow patches are often a sign of uneven feeding — a fertilizing visit could help even things out.',
+  },
+  {
+    keywords: ['weeds', 'weedy'],
+    response: 'For weeds, a targeted weed-control treatment is usually the fastest fix — want me to have you book one?',
+  },
+  {
+    keywords: ['soggy', 'mushy', 'overwatered', 'wet'],
+    response: 'That can mean overwatering or poor drainage — try cutting back watering frequency and see if it improves.',
+  },
+  {
+    keywords: ['bugs', 'pests', 'insects'],
+    response: 'Pests can be tricky to diagnose over chat — I\'d recommend booking a visit so someone can take a look in person.',
+  },
+];

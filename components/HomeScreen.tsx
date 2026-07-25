@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Appointment, Customer, REWARD_THRESHOLD } from '../data/mockData';
 import { colors } from '../constants/theme';
+import CareChatModal from './CareChatModal';
 import HealthPill from './HealthPill';
 
 type Props = {
@@ -11,6 +13,7 @@ type Props = {
 };
 
 export default function HomeScreen({ customer, appointments, rewardAvailable, onRequestService }: Props) {
+  const [chatVisible, setChatVisible] = useState(false);
   const nextAppointment = appointments.find((a) => a.status === 'upcoming');
   const lastRatedVisit = appointments.find((a) => a.status === 'completed' && a.lawnHealth);
 
@@ -83,9 +86,15 @@ export default function HomeScreen({ customer, appointments, rewardAvailable, on
         </View>
       </View>
 
+      <Pressable style={styles.chatButton} onPress={() => setChatVisible(true)}>
+        <Text style={styles.chatButtonText}>Chat with us</Text>
+      </Pressable>
+
       <Pressable style={styles.ctaButton} onPress={onRequestService}>
         <Text style={styles.ctaButtonText}>Request a Service</Text>
       </Pressable>
+
+      <CareChatModal visible={chatVisible} onClose={() => setChatVisible(false)} />
     </ScrollView>
   );
 }
@@ -207,6 +216,19 @@ const styles = StyleSheet.create({
   },
   ctaButtonText: {
     color: colors.white,
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  chatButton: {
+    backgroundColor: colors.card,
+    borderRadius: 12,
+    paddingVertical: 14,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: colors.primaryDark,
+  },
+  chatButtonText: {
+    color: colors.primaryDark,
     fontSize: 16,
     fontWeight: '600',
   },

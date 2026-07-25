@@ -1,0 +1,3 @@
+# Local rule-based matching for the Chat with us Care Tip flow
+
+The Chat with us flow is meant to eventually be answered by a real LLM, but for this pass we implemented it with local keyword-substring matching against a small library of Care Tips instead. This lets the interaction shape — one customer message in, one Care Tip out, no conversation memory across turns — get built and tested now, without taking on the cost, latency, and complexity of a real LLM integration before that shape is proven. A future LLM integration should slot in behind the same matching function rather than reworking the chat UI or state.
