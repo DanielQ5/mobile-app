@@ -1,6 +1,7 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Appointment, GardenZoneHealth } from '../data/mockData';
 import { colors, lawnHealthDisplay } from '../constants/theme';
+import HealthPill from './HealthPill';
 
 type Props = {
   appointments: Appointment[];
@@ -35,20 +36,15 @@ export default function ProgressScreen({ appointments, gardenZones }: Props) {
         {healthHistory.length === 0 ? (
           <Text style={styles.emptyText}>No visits rated yet.</Text>
         ) : (
-          healthHistory.map((appt) => {
-            const status = lawnHealthDisplay[appt.lawnHealth!];
-            return (
-              <View key={appt.id} style={styles.historyRow}>
-                <View>
-                  <Text style={styles.historyDate}>{appt.date}</Text>
-                  <Text style={styles.historyService}>{appt.serviceName}</Text>
-                </View>
-                <View style={[styles.healthPill, { backgroundColor: status.bg }]}>
-                  <Text style={[styles.healthPillText, { color: status.text }]}>{status.label}</Text>
-                </View>
+          healthHistory.map((appt) => (
+            <View key={appt.id} style={styles.historyRow}>
+              <View>
+                <Text style={styles.historyDate}>{appt.date}</Text>
+                <Text style={styles.historyService}>{appt.serviceName}</Text>
               </View>
-            );
-          })
+              <HealthPill status={appt.lawnHealth!} />
+            </View>
+          ))
         )}
       </View>
     </ScrollView>
@@ -137,14 +133,5 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: colors.textMuted,
     marginTop: 2,
-  },
-  healthPill: {
-    borderRadius: 8,
-    paddingVertical: 4,
-    paddingHorizontal: 10,
-  },
-  healthPillText: {
-    fontSize: 12,
-    fontWeight: '700',
   },
 });

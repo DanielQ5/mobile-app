@@ -10,6 +10,7 @@ import ProgressScreen from './components/ProgressScreen';
 import ProfileScreen from './components/ProfileScreen';
 import {
   Appointment,
+  REWARD_THRESHOLD,
   Service,
   customer,
   initialAppointments,
@@ -38,11 +39,11 @@ export default function App() {
 
     if (redeeming) {
       setRewardAvailable(false);
-    } else if (nextAppointments.length % 5 === 0) {
+    } else if (nextAppointments.length % REWARD_THRESHOLD === 0) {
       setRewardAvailable(true);
       Alert.alert(
         "You've earned a reward! 🎉",
-        "That's 5 maintenances — your next booking can be free!"
+        `That's ${REWARD_THRESHOLD} maintenances — your next booking can be free!`
       );
     }
 

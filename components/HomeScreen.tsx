@@ -1,6 +1,7 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Appointment, Customer } from '../data/mockData';
-import { colors, lawnHealthDisplay } from '../constants/theme';
+import { Appointment, Customer, REWARD_THRESHOLD } from '../data/mockData';
+import { colors } from '../constants/theme';
+import HealthPill from './HealthPill';
 
 type Props = {
   customer: Customer;
@@ -12,10 +13,9 @@ type Props = {
 export default function HomeScreen({ customer, appointments, rewardAvailable, onRequestService }: Props) {
   const nextAppointment = appointments.find((a) => a.status === 'upcoming');
   const lastRatedVisit = appointments.find((a) => a.status === 'completed' && a.lawnHealth);
-  const lawnHealth = lastRatedVisit?.lawnHealth ? lawnHealthDisplay[lastRatedVisit.lawnHealth] : null;
 
-  const filledSlots = rewardAvailable ? 5 : appointments.length % 5;
-  const remaining = 5 - filledSlots;
+  const filledSlots = rewardAvailable ? REWARD_THRESHOLD : appointments.length % REWARD_THRESHOLD;
+  const remaining = REWARD_THRESHOLD - filledSlots;
 
   let challengeText: string;
   if (rewardAvailable) {
@@ -55,7 +55,7 @@ export default function HomeScreen({ customer, appointments, rewardAvailable, on
       <View style={styles.loyaltyCard}>
         <Text style={styles.loyaltyLabel}>Reward Progress</Text>
         <View style={styles.grassRow}>
-          {Array.from({ length: 5 }, (_, i) => i < filledSlots).map((filled, i) => (
+          {Array.from({ length: REWARD_THRESHOLD }, (_, i) => i < filledSlots).map((filled, i) => (
             <View key={i} style={[styles.grassSlot, filled && styles.grassSlotFilled]}>
               <Text style={[styles.grassEmoji, !filled && styles.grassEmojiDim]}>🌿</Text>
             </View>
@@ -66,10 +66,8 @@ export default function HomeScreen({ customer, appointments, rewardAvailable, on
 
       <View style={styles.statsRow}>
         <View style={styles.statBox}>
-          {lawnHealth ? (
-            <View style={[styles.healthPill, { backgroundColor: lawnHealth.bg }]}>
-              <Text style={[styles.healthPillText, { color: lawnHealth.text }]}>{lawnHealth.label}</Text>
-            </View>
+          {lastRatedVisit?.lawnHealth ? (
+            <HealthPill status={lastRatedVisit.lawnHealth} />
           ) : (
             <Text style={styles.statValue}>—</Text>
           )}
@@ -195,15 +193,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
     color: colors.primaryDark,
-  },
-  healthPill: {
-    borderRadius: 8,
-    paddingVertical: 3,
-    paddingHorizontal: 8,
-  },
-  healthPillText: {
-    fontSize: 12,
-    fontWeight: '700',
   },
   statLabel: {
     fontSize: 12,

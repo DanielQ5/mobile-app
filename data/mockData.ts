@@ -40,6 +40,8 @@ export type Customer = {
   plan: string;
 };
 
+export const REWARD_THRESHOLD = 5;
+
 export type GardenZoneId = 'front-left' | 'front-right' | 'back-left' | 'back-right';
 
 export type GardenZoneHealth = {
